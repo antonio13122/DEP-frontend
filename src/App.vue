@@ -1,17 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+  <div id="app">
+    <SiteHeader />
 
+    <main>
+      <HomePage />
+      <MarinasSection />
+      <AppointmentForm />
+    </main>
+
+    <SiteFooter />
+  </div>
+</template>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from "./components/HelloWorld.vue";
+import HomePage from "./components/HomePage.vue";
+import MarinasSection from "./components/MarinasSection.vue";
+import AppointmentForm from "./components/AppointmentForm.vue";
+import SiteFooter from "./components/SiteFooter.vue";
+import SiteHeader from "./components/SiteHeader.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    HomePage,
+    MarinasSection,
+    AppointmentForm,
+    SiteFooter,
+    SiteHeader,
+  },
+};
 </script>
 
 <style>
