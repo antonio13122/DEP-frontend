@@ -11,8 +11,8 @@
     <SiteFooter />
   </div>
 </template>
+
 <script>
-//import HelloWorld from "./components/HelloWorld.vue";
 import HomePage from "./components/HomePage.vue";
 import MarinasSection from "./components/MarinasSection.vue";
 import AppointmentForm from "./components/AppointmentForm.vue";
@@ -32,12 +32,53 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #060b27;
+  color: white;
+  overflow-x: hidden;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+section {
+  width: 100%;
+  max-width: 100%;
+  margin: 20px 0;
+}
+
+.HomePage,
+.MarinasSection,
+.AppointmentForm,
+.SiteFooter,
+.SiteHeader {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 10px;
+  }
+
+  section {
+    width: 100%;
+  }
 }
 </style>
