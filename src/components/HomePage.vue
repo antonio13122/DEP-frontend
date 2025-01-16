@@ -8,8 +8,10 @@
         marina or planning your next voyage, DEP simplifies your journey.
       </p>
       <div class="buttons">
-        <button class="btn primary">See how it works</button>
-        <button class="btn secondary">Learn More</button>
+        <router-link to="/Register" class="btn primary"
+          >See how it works</router-link
+        >
+        <a href="#AppointmentForm" class="btn secondary"> Learn More </a>
       </div>
     </div>
   </section>
@@ -29,15 +31,15 @@ export default {
   font-family: "Montserrat", sans-serif;
   margin: 0;
   box-sizing: border-box;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
   display: flex;
-  align-items: left; /* Vertically center the content */
-  justify-content: left; /* Horizontally center the content */
+  align-items: left;
+  justify-content: left;
 }
 
 .hero {
   text-align: left;
-  max-width: 800px; /* Limits the width of the hero section */
+  max-width: 800px;
 }
 
 .hero h2 {
@@ -74,6 +76,7 @@ export default {
   background-color: #008cff;
   color: white;
   font-family: "Montserrat", sans-serif;
+  text-decoration: none;
 }
 
 .secondary {
@@ -81,5 +84,6 @@ export default {
   border: 2px solid white;
   color: white;
   font-family: "Montserrat", sans-serif;
+  text-decoration: none;
 }
 </style>

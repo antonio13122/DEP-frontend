@@ -8,8 +8,12 @@
         <li><a href="#Marinas">Our Marinas</a></li>
         <li><a href="#AppointmentForm">Contact</a></li>
       </ul>
-      <button>Login →</button>
-      <button class="btn">Become a member →</button>
+      <div class="buttons">
+        <router-link to="/Login" class="login-button">Login</router-link>
+        <router-link to="/Register" class="member-button"
+          >Become a member→</router-link
+        >
+      </div>
     </nav>
   </header>
 </template>
@@ -26,39 +30,70 @@ export default {
 .header {
   background-color: #060b27;
   color: white;
-  padding: 1rem;
+  padding: 0.8rem;
   font-family: "Montserrat", sans-serif;
+  border-top: 3px solid #23a3f0;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Montserrat", sans-serif;
 }
+
 .logo {
-  width: 150px;
+  width: 120px;
   height: auto;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1rem;
-  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.1em;
+  gap: 4rem;
+  font-weight: 500;
 }
+
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-family: "Montserrat", sans-serif;
-  cursor: pointer; /* Ensures it's clickable */
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.btn {
+.buttons {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.login-button {
+  background: none;
+  border: none;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.member-button:hover {
+  background-color: #1a7ec8;
+}
+
+.member-button {
   background-color: #23a3f0;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border: none;
-  cursor: pointer;
+  border-radius: 5px;
   font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-decoration: none;
 }
 </style>

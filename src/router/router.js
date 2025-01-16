@@ -4,13 +4,17 @@ import Marinas from "@/components/Marinas.vue";
 import AppointmentForm from "@/components/AppointmentForm.vue";
 import AboutUs from "@/components/AboutUs.vue";
 import MainView from "@/views/MainView.vue";
-
+import Login from "@/views/Login.vue";
+import Register from "@/views/Register.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
+  { path: "/Login", component: Login },
+  { path: "/Register", component: Register },
+
   { path: "/Marinas", component: Marinas },
   { path: "/AppointmentForm", component: AppointmentForm },
   { path: "/AboutUs", component: AboutUs },
-  // Set MainView as the default route (root route)
+  // MainView je default
   { path: "/", component: MainView },
 ];
 
