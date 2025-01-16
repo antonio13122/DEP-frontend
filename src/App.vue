@@ -4,6 +4,7 @@
 
     <main>
       <HomePage />
+      <AboutUs />
       <MarinasSection />
       <AppointmentForm />
     </main>
@@ -18,6 +19,7 @@ import MarinasSection from "./components/MarinasSection.vue";
 import AppointmentForm from "./components/AppointmentForm.vue";
 import SiteFooter from "./components/SiteFooter.vue";
 import SiteHeader from "./components/SiteHeader.vue";
+import AboutUs from "./components/AboutUs.vue";
 
 export default {
   name: "App",
@@ -27,6 +29,7 @@ export default {
     AppointmentForm,
     SiteFooter,
     SiteHeader,
+    AboutUs,
   },
 };
 </script>
@@ -38,12 +41,8 @@ body {
   background-color: #060b27;
   color: white;
   overflow-x: hidden;
-}
-
-#app {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  padding-left: 1cm;
+  padding-right: 1cm;
 }
 
 main {
@@ -74,7 +73,15 @@ section {
 
 @media (max-width: 768px) {
   main {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
   }
 
   section {
