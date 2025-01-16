@@ -1,5 +1,5 @@
 <template>
-  <div class="section-container">
+  <div id="Marinas" class="section-container">
     <div class="text-container">
       <h1>Our Marinas</h1>
       <h2>
@@ -12,9 +12,13 @@
       <div class="product-container">
         <img
           class="product-image"
-          :src="require('@/assets/card1.jpg')"
+          :src="require('@/assets/card1.png')"
           alt="Product 1"
         />
+        <div class="text-overlay">
+          <h3>Real-Time Updates</h3>
+          <p>Reserve spots at scenic and popular marinas worldwide.</p>
+        </div>
       </div>
       <div class="product-container">
         <img
@@ -22,13 +26,21 @@
           :src="require('@/assets/card2.jpg')"
           alt="Product 2"
         />
+        <div class="text-overlay">
+          <h3>Modern Amenities</h3>
+          <p>Access well-maintained docks, fueling stations and facilities.</p>
+        </div>
       </div>
       <div class="product-container">
         <img
           class="product-image"
-          :src="require('@/assets/card3.jpg')"
+          :src="require('@/assets/card3.png')"
           alt="Product 3"
         />
+        <div class="text-overlay">
+          <h3>Wide Availability</h3>
+          <p>Stay informed and book your dock anytime, anywhere.</p>
+        </div>
       </div>
       <div class="product-container">
         <img
@@ -36,6 +48,9 @@
           :src="require('@/assets/card4.jpg')"
           alt="Product 4"
         />
+        <div class="text-overlay button-overlay">
+          <button>See availability</button>
+        </div>
       </div>
     </div>
   </div>
@@ -126,6 +141,68 @@ export default {
 
 .product-container:hover::after {
   opacity: 1;
+}
+
+.text-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  z-index: 10;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.text-overlay h3 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  font-weight: 600; /* Semi-bold */
+}
+
+.text-overlay p {
+  margin: 5px 0 0;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.2px;
+  font-weight: 500; /* Medium-bold */
+}
+
+.button-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.button-overlay button {
+  background-color: #008cff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: normal;
+}
+
+.button-overlay button:hover {
+  background-color: darkblue;
 }
 
 @media (max-width: 768px) {

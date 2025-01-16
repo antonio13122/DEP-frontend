@@ -1,5 +1,5 @@
 <template>
-  <section class="about-us">
+  <section id="AboutUs" class="about-us">
     <div class="feature">
       <img src="@/assets/icon1.png" alt="Seamless Reservations" />
       <h3>Seamless Reservations</h3>
@@ -30,11 +30,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
-  padding: 4rem;
+  gap: 6rem;
+  padding: 1rem;
   background-color: #060b27;
   color: white;
   text-align: center;
+  margin-bottom: 11rem;
 }
 
 .feature {

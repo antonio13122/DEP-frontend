@@ -1,13 +1,14 @@
 <template>
   <header class="header">
     <nav class="navbar">
-      <img :src="require('@/assets/logo.png')" alt="Logo" class="logo" />
+      <img :src="require('@/assets/DEP.png')" alt="Logo" class="logo" />
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#marinas">Our Marinas</a></li>
-        <li><a href="#appointment">Appointment</a></li>
+        <li><a href="#HomePage">Home</a></li>
+        <li><a href="#AboutUs">About Us</a></li>
+        <li><a href="#Marinas">Our Marinas</a></li>
+        <li><a href="#AppointmentForm">Contact</a></li>
       </ul>
-
+      <button>Login →</button>
       <button class="btn">Become a member →</button>
     </nav>
   </header>
@@ -49,7 +50,9 @@ export default {
   color: white;
   text-decoration: none;
   font-family: "Montserrat", sans-serif;
+  cursor: pointer; /* Ensures it's clickable */
 }
+
 .btn {
   background-color: #23a3f0;
   color: white;

@@ -1,5 +1,5 @@
 <template>
-  <section id="home" class="home">
+  <section id="HomePage" class="home">
     <div class="hero">
       <h2>We ensure the best Marina experience</h2>
       <p>
@@ -25,36 +25,42 @@ export default {
 .home {
   color: white;
   background-color: #060b27;
-  padding: 3rem 4rem; /* Add padding to push content away from the edges */
+  padding: 3rem 4rem;
   font-family: "Montserrat", sans-serif;
-  margin: 0; /* Ensure no extra margins */
-  box-sizing: border-box; /* Include padding in width calculation */
-}
-.hero {
+  margin: 0;
+  box-sizing: border-box;
+  height: 100vh; /* Full viewport height */
   display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Align content to the left */
-  text-align: left; /* Left-align text */
+  align-items: left; /* Vertically center the content */
+  justify-content: left; /* Horizontally center the content */
 }
+
+.hero {
+  text-align: left;
+  max-width: 800px; /* Limits the width of the hero section */
+}
+
 .hero h2 {
   font-family: "Montserrat", sans-serif;
-  font-size: 50px;
+  font-size: 70px;
   font-weight: 800;
   margin-bottom: 1rem;
 }
+
 .hero p {
   font-family: "Montserrat", sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 500;
   margin-bottom: 2rem;
-  max-width: 600px; /* Limit the width for better readability */
-  line-height: 1.9;
+  max-width: 600px;
 }
+
 .buttons {
   display: flex;
   gap: 1rem;
-  justify-content: flex-start; /* Align buttons to the left */
+  justify-content: flex-start;
 }
+
 .btn {
   padding: 0.75rem 1.5rem;
   border: none;
@@ -63,13 +69,17 @@ export default {
   font-size: 0.8rem;
   font-weight: bold;
 }
+
 .primary {
   background-color: #008cff;
   color: white;
+  font-family: "Montserrat", sans-serif;
 }
+
 .secondary {
   background: transparent;
   border: 2px solid white;
   color: white;
+  font-family: "Montserrat", sans-serif;
 }
 </style>

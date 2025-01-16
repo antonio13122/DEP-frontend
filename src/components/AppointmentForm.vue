@@ -1,5 +1,5 @@
 <template>
-  <section id="appointment" class="appointment">
+  <section id="AppointmentForm" class="appointment">
     /* nije clear frontend, to do later kad se spoji s backendom */
     <h2>Make an Appointment</h2>
     <form>
