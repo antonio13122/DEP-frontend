@@ -13,25 +13,24 @@
 </template>
 
 <script>
-import axios from "axios"; // Import axios directly
+import axios from "axios";
 
 export default {
   data() {
     return {
-      users: [], // Array to store users fetched from backend
-      loading: false, // For loading state
-      error: null, // To handle error messages
+      users: [],
+      loading: false,
+      error: null,
     };
   },
   methods: {
-    // Function to fetch users from the API
     async fetchUsers() {
       this.loading = true;
-      this.error = null; // Reset error
+      this.error = null;
 
       try {
         const response = await axios.get("http://localhost:5000/api/users");
-        this.users = response.data; // Store the users data
+        this.users = response.data;
       } catch (err) {
         this.error = err.response
           ? err.response.data.message
