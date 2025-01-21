@@ -6,7 +6,7 @@
         <li><a href="#HomePage">Home</a></li>
         <li><a href="#AboutUs">About Us</a></li>
         <li><a href="#Marinas">Our Marinas</a></li>
-        <li><a href="#AppointmentForm">Contact</a></li>
+        <li><router-link to="/AppointmentForm">Contact</router-link></li>
       </ul>
       <div class="buttons">
         <router-link to="/Login" class="login-button">Login</router-link>

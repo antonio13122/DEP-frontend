@@ -5,7 +5,6 @@
       <HomePage />
       <AboutUs />
       <Marinas />
-      <AppointmentForm />
     </main>
     <SiteFooter />
   </div>
@@ -15,7 +14,7 @@
 import HomePage from "@/components/HomePage.vue";
 import AboutUs from "@/components/AboutUs.vue";
 import Marinas from "@/components/Marinas.vue";
-import AppointmentForm from "@/components/AppointmentForm.vue";
+
 import SiteHeader from "@/components/SiteHeader.vue";
 import SiteFooter from "@/components/SiteFooter.vue";
 
@@ -25,7 +24,7 @@ export default {
     HomePage,
     AboutUs,
     Marinas,
-    AppointmentForm,
+
     SiteHeader,
     SiteFooter,
   },

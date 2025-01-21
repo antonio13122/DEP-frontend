@@ -71,6 +71,7 @@ export default {
   background-color: #060b27;
   padding: 20px;
   color: white;
+  margin-bottom: 140px;
 }
 
 .text-container {

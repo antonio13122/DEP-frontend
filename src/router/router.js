@@ -7,11 +7,16 @@ import MainView from "@/views/MainView.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import TestApi from "@/components/TestApi.vue";
+import OwnerHome from "@/views/OwnerHome.vue";
+import SailorHome from "@/views/SailorHome.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
   { path: "/TestApi", component: TestApi },
 
   { path: "/Login", component: Login },
+  { path: "/SailorHome", component: SailorHome },
+  { path: "/OwnerHome", component: OwnerHome },
+
   { path: "/Register", component: Register },
 
   { path: "/Marinas", component: Marinas },
