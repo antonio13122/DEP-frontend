@@ -11,6 +11,9 @@
         <router-link to="/Register" class="btn primary"
           >See how it works</router-link
         >
+        <router-link to="/sailor" class="btn secondary"
+          >Go to Sailor Home</router-link
+        >
         <a href="#AppointmentForm" class="btn secondary"> Learn More </a>
       </div>
     </div>

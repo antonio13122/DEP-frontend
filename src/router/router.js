@@ -6,8 +6,11 @@ import AboutUs from "@/components/AboutUs.vue";
 import MainView from "@/views/MainView.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import TestApi from "@/components/TestApi.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
+  { path: "/TestApi", component: TestApi },
+
   { path: "/Login", component: Login },
   { path: "/Register", component: Register },
 
