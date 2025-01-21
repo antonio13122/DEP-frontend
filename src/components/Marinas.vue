@@ -49,7 +49,9 @@
           alt="Product 4"
         />
         <div class="text-overlay button-overlay">
-          <button>See availability</button>
+          <router-link to="/Register">
+            <button>See Availability</button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -168,7 +170,7 @@ export default {
   font-size: 20px;
   line-height: 30px;
   letter-spacing: 0.2px;
-  font-weight: 500; /* Medium-bold */
+  font-weight: 500;
 }
 
 .button-overlay {
@@ -189,8 +191,8 @@ export default {
   border-radius: 20px;
   position: absolute;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 40%;
+  transform: translateX(-40%);
   padding: 10px 20px;
   font-size: 18px;
   font-family: "Montserrat", sans-serif;

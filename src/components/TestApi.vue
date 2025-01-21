@@ -6,7 +6,7 @@
     <div v-if="error" style="color: red">Error: {{ error }}</div>
     <ul v-if="users.length">
       <li v-for="user in users" :key="user._id">
-        {{ user.name }} - {{ user.email }}
+        {{ user.name }} - {{ user.email }} - {{ user.password }}
       </li>
     </ul>
   </div>

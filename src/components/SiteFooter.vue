@@ -32,7 +32,7 @@ export default {
 
 .footer-content {
   max-width: 1200px;
-  margin: 20 auto;
+  margin: 0 auto;
 }
 
 .footer-text {
