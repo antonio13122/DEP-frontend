@@ -3,8 +3,26 @@
 </template>
 
 <script>
+import { getUser } from "@/services/authService";
+
 export default {
   name: "App",
+  data() {
+    return {
+      user: getUser(),
+    };
+  },
+  methods: {
+    setUser(user) {
+      this.user = user;
+    },
+  },
+  provide() {
+    return {
+      user: this.user,
+      setUser: this.setUser,
+    };
+  },
 };
 </script>
 

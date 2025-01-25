@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { getToken, getUser } from "@/services/authService.js";
 import HomePage from "@/components/HomePage.vue";
 import Marinas from "@/components/Marinas.vue";
 import AppointmentForm from "@/components/AppointmentForm.vue";
@@ -15,7 +16,11 @@ const routes = [
 
   { path: "/Login", component: Login },
   { path: "/SailorHome", component: SailorHome },
-  { path: "/OwnerHome", component: OwnerHome },
+  {
+    path: "/OwnerHome",
+    component: OwnerHome,
+    meta: { requiresAuth: true },
+  },
 
   { path: "/Register", component: Register },
 
@@ -29,6 +34,21 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+router.beforeEach((to, from, next) => {
+  const token = getToken();
+  if (to.meta.requiresAuth && !token) {
+    next("/Login");
+  } else if (to.meta.role) {
+    const user = getUser();
+    if (!user || user.role !== to.meta.role) {
+      next("/Login");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
