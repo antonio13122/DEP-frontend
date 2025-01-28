@@ -36,7 +36,7 @@ export default {
 
         console.log("Login successful");
 
-        // Store isSailor flag in localStorage
+        // is sailor flag
         localStorage.setItem("isSailor", data.user.isSailor);
 
         this.$root.setUser(data.user);
