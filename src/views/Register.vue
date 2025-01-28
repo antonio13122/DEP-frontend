@@ -5,7 +5,7 @@
       <p class="subtitle">Welcome to the official site of our marina</p>
       <p class="login-text">
         Already have an account?
-        <router-link to="/Login" class="login-link">Login.</router-link>
+        <router-link to="/Choose" class="login-link">Login.</router-link>
       </p>
 
       <form @submit.prevent="handleRegister" class="register-form">
@@ -35,7 +35,7 @@
 
       <div class="divider"><span></span> Or <span></span></div>
 
-      <router-link to="/guest" class="btn guest-btn">
+      <router-link to="/MainView" class="btn guest-btn">
         Continue as a guest
       </router-link>
     </div>

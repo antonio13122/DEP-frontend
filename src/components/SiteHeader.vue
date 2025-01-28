@@ -9,10 +9,7 @@
         <li><router-link to="/AppointmentForm">Contact</router-link></li>
       </ul>
       <div class="buttons">
-        <router-link to="/Login" class="login-button">Login</router-link>
-        <router-link to="/Register" class="member-button"
-          >Become a member→</router-link
-        >
+        <router-link to="/Choose" class="member-button">Join us →</router-link>
       </div>
     </nav>
   </header>
@@ -63,20 +60,8 @@ export default {
 
 .buttons {
   display: flex;
-  gap: 0.7rem;
+  gap: 0rem;
   align-items: center;
-}
-
-.login-button {
-  background: none;
-  border: none;
-  color: white;
-  font-family: "Montserrat", sans-serif;
-  font-weight: bold;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  text-decoration: none;
 }
 
 .member-button:hover {
@@ -86,12 +71,14 @@ export default {
 .member-button {
   background-color: #23a3f0;
   color: white;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 3.5rem;
   border: none;
+  margin-right: 30px;
+  margin-left: 5px;
   border-radius: 5px;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   cursor: pointer;
   text-decoration: none;

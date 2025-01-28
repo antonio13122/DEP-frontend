@@ -7,11 +7,14 @@ import AboutUs from "@/components/AboutUs.vue";
 import MainView from "@/views/MainView.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+
+import Choose from "@/views/Choose.vue";
 import TestApi from "@/components/TestApi.vue";
 import OwnerHome from "@/views/OwnerHome.vue";
 import SailorHome from "@/views/SailorHome.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
+  { path: "/Choose", component: Choose },
   { path: "/TestApi", component: TestApi },
 
   { path: "/Login", component: Login },
@@ -22,13 +25,13 @@ const routes = [
     meta: { requiresAuth: true },
   },
 
-  { path: "/Register", component: Register },
+  { path: "/", component: Register },
 
   { path: "/Marinas", component: Marinas },
   { path: "/AppointmentForm", component: AppointmentForm },
   { path: "/AboutUs", component: AboutUs },
   // MainView je default
-  { path: "/", component: MainView },
+  { path: "/MainView", component: MainView },
 ];
 
 const router = createRouter({
