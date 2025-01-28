@@ -9,14 +9,13 @@ export const register = async (userData) => {
 export const login = async (userData) => {
   try {
     const response = await axios.post(`${API_URL}/login`, userData);
-    // Saving token and user in localStorage
+
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.user));
     return response;
   } catch (err) {
-    // Log the error for debugging
     console.error("Login Error:", err);
-    throw err; // Re-throw the error for the frontend to handle
+    throw err;
   }
 };
 
@@ -28,5 +27,5 @@ export const logout = () => {
 export const getToken = () => localStorage.getItem("token");
 
 export const getUser = () => {
-  return JSON.parse(localStorage.getItem("user")); // Get user from localStorage
+  return JSON.parse(localStorage.getItem("user"));
 };

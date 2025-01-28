@@ -37,18 +37,18 @@ const router = createRouter({
 });
 router.beforeEach((to, from, next) => {
   const token = getToken();
+  const user = getUser();
+
   if (to.meta.requiresAuth && !token) {
     next("/Login");
-  } else if (to.meta.role) {
-    const user = getUser();
-    if (!user || user.role !== to.meta.role) {
-      next("/Login");
-    } else {
+  } else if (to.path === "/SailorHome") {
+    if (user && user.email === "sailor@gmail.com") {
       next();
+    } else {
+      next("/Login");
     }
   } else {
     next();
   }
 });
-
 export default router;

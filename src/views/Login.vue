@@ -33,11 +33,15 @@ export default {
           email: this.email,
           password: this.password,
         });
-        console.log("Login successful, navigating to /OwnerHome");
+
+        console.log("Login successful");
+
+        // Store isSailor flag in localStorage
+        localStorage.setItem("isSailor", data.user.isSailor);
+
         this.$root.setUser(data.user);
-        this.$router.push("/OwnerHome");
+        this.$router.push(data.user.isSailor ? "/SailorHome" : "/OwnerHome");
       } catch (err) {
-        // Check for error message and set error if it exists
         this.error = err.response?.data?.message || "Invalid email or password";
       }
     },
