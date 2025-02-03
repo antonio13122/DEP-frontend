@@ -28,7 +28,7 @@
       <p v-if="error" class="error-message">{{ error }}</p>
       <p class="signup-text">
         Don't have an account?
-        <router-link to="/Register" class="signup-link">Sign Up</router-link>
+        <router-link to="/" class="signup-link">Sign Up</router-link>
       </p>
     </div>
   </div>

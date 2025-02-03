@@ -14,7 +14,7 @@
       </div>
       <p class="signup-text">
         Don't Have An Account?
-        <router-link to="/register" class="signup-link">Sign Up</router-link>
+        <router-link to="/" class="signup-link">Sign Up</router-link>
       </p>
     </div>
   </div>

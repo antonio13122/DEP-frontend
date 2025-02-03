@@ -7,6 +7,8 @@ import AboutUs from "@/components/AboutUs.vue";
 import MainView from "@/views/MainView.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import BookBerth from "@/views/BookBerth.vue";
+import MyBoat from "@/views/MyBoat.vue";
 
 import Choose from "@/views/Choose.vue";
 import TestApi from "@/components/TestApi.vue";
@@ -28,9 +30,11 @@ const routes = [
   { path: "/", component: Register },
 
   { path: "/Marinas", component: Marinas },
+  { path: "/BookBerth", component: BookBerth },
+  { path: "/MyBoat", component: MyBoat },
   { path: "/AppointmentForm", component: AppointmentForm },
   { path: "/AboutUs", component: AboutUs },
-  // MainView je default
+
   { path: "/MainView", component: MainView },
 ];
 

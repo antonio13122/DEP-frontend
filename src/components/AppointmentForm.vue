@@ -1,6 +1,6 @@
 <template>
   <section id="AppointmentForm" class="appointment">
-    <router-link to="/" class="home-link">
+    <router-link to="/MainView#HomePage" class="home-link">
       <img
         :src="require('@/assets/homeicon.png')"
         alt="Home"
