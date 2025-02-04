@@ -9,6 +9,8 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import BookBerth from "@/views/BookBerth.vue";
 import MyBoat from "@/views/MyBoat.vue";
+import DockView from "@/views/DockView.vue";
+import ListBoat from "@/views/ListBoat.vue";
 
 import Choose from "@/views/Choose.vue";
 import TestApi from "@/components/TestApi.vue";
@@ -17,6 +19,8 @@ import SailorHome from "@/views/SailorHome.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
   { path: "/Choose", component: Choose },
+  { path: "/ListBoat", component: ListBoat },
+  { path: "/DockView", component: DockView },
   { path: "/TestApi", component: TestApi },
 
   { path: "/Login", component: Login },

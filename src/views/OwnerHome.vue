@@ -80,7 +80,7 @@ body {
   display: block;
 }
 
-/* Remove text-decoration from router-link and its child anchor <a> */
+
 .router-link,
 .router-link a {
   text-decoration: none;

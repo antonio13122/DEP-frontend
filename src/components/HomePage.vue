@@ -8,13 +8,11 @@
         marina or planning your next voyage, DEP simplifies your journey.
       </p>
       <div class="buttons">
-        <router-link to="/Register" class="btn primary"
-          >See how it works</router-link
+        <router-link to="/" class="btn primary">See how it works</router-link>
+
+        <router-link to="/AppointmentForm" class="btn secondary"
+          >Learn More</router-link
         >
-        <router-link to="/SailorHome" class="btn secondary"
-          >Go to Sailor Home</router-link
-        >
-        <a href="#AppointmentForm" class="btn secondary"> Learn More </a>
       </div>
     </div>
   </section>

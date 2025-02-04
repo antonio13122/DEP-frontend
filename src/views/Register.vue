@@ -64,7 +64,7 @@ export default {
           email: this.email,
           password: this.password,
         });
-        this.$router.push("/Login");
+        this.$router.push("/Choose");
       } catch (err) {
         console.error(err.response?.data);
         this.error = err.response?.data?.message || "Registration failed";
