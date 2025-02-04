@@ -49,7 +49,7 @@
           alt="Product 4"
         />
         <div class="text-overlay button-overlay">
-          <router-link to="/Register">
+          <router-link to="/">
             <button>See Availability</button>
           </router-link>
         </div>
