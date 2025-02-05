@@ -7,7 +7,7 @@
           :src="require('@/assets/list_icon.png')"
           alt="List View"
         />
-        <h1>Occupancy</h1>
+        <h1>All boats</h1>
       </router-link>
     </div>
     <div class="product-container">
@@ -17,7 +17,7 @@
           :src="require('@/assets/arr_icon.png')"
           alt="Dockview"
         />
-        <h1>Boat list</h1>
+        <h1>Occupancy</h1>
       </router-link>
     </div>
   </div>
