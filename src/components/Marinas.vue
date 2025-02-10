@@ -49,7 +49,7 @@
           alt="Product 4"
         />
         <div class="text-overlay button-overlay">
-          <router-link to="/">
+          <router-link to="/GuestView">
             <button>See Availability</button>
           </router-link>
         </div>

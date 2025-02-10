@@ -3,25 +3,15 @@
     <router-link to="/SailorHome">
       <img src="@/assets/back_icon.png" alt="Back Icon" class="back-icon" />
     </router-link>
+
     <div class="mooring-grid">
       <div
         v-for="mooring in leftMoorings"
         :key="mooring._id"
         :class="['mooring', mooring.boat ? 'occupied' : 'available']"
-        @click="showBoatDetails(mooring.boat)"
-      >
-        <span v-if="mooring.boat" class="boat-name">{{
-          mooring.boat.ime_broda
-        }}</span>
-      </div>
-    </div>
-    <div class="dock"></div>
-    <div class="mooring-grid">
-      <div
-        v-for="mooring in rightMoorings"
-        :key="mooring._id"
-        :class="['mooring', mooring.boat ? 'occupied' : 'available']"
-        @click="showBoatDetails(mooring.boat)"
+        @click="
+          mooring.boat ? showBoatDetails(mooring) : showAddBoatForm(mooring)
+        "
       >
         <span v-if="mooring.boat" class="boat-name">{{
           mooring.boat.ime_broda
@@ -29,21 +19,64 @@
       </div>
     </div>
 
-    <div class="boat-details" v-if="selectedBoat">
+    <div class="dock"></div>
+
+    <div class="mooring-grid">
+      <div
+        v-for="mooring in rightMoorings"
+        :key="mooring._id"
+        :class="['mooring', mooring.boat ? 'occupied' : 'available']"
+        @click="
+          mooring.boat ? showBoatDetails(mooring) : showAddBoatForm(mooring)
+        "
+      >
+        <span v-if="mooring.boat" class="boat-name">{{
+          mooring.boat.ime_broda
+        }}</span>
+      </div>
+    </div>
+
+    <div class="boat-details" v-if="selectedMooring && selectedMooring.boat">
+      <button class="close-button" @click="closePopup">✖</button>
       <h3>Boat Details</h3>
-      <p><strong>Name:</strong> {{ selectedBoat.ime_broda }}</p>
-      <p><strong>Type:</strong> {{ selectedBoat.vrsta_broda }}</p>
-      <p><strong>Length:</strong> {{ selectedBoat.duzina }} meters</p>
-      <p><strong>Draft:</strong> {{ selectedBoat.gaz }} meters</p>
+      <p><strong>Name:</strong> {{ selectedMooring.boat.ime_broda }}</p>
+      <p><strong>Type:</strong> {{ selectedMooring.boat.vrsta_broda }}</p>
+      <p><strong>Length:</strong> {{ selectedMooring.boat.duzina }} meters</p>
+      <p><strong>Draft:</strong> {{ selectedMooring.boat.gaz }} meters</p>
+      <button @click="removeBoat(selectedMooring._id)" class="remove-button">
+        Remove Boat
+      </button>
+    </div>
+
+    <div class="boat-details" v-if="selectedEmptyMooring">
+      <button class="close-button" @click="closePopup">✖</button>
+      <h3>Add Boat</h3>
+      <label for="boatSelect"><strong>Select Boat:</strong></label>
+      <select v-model="selectedBoatId" id="boatSelect">
+        <option
+          v-for="boat in availableBoatsFiltered"
+          :key="boat._id"
+          :value="boat._id"
+        >
+          {{ boat.ime_broda }} ({{ boat.vrsta_broda }})
+        </option>
+      </select>
+      <button @click="addBoat(selectedEmptyMooring._id)" class="add-button">
+        Add Boat
+      </button>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      moorings: [], // dodati dva buttona i dvije funkcije za isplov/uplov novog broda
-      selectedBoat: null, // spremi detalje broda u varijablu
+      moorings: [],
+      availableBoats: [],
+      selectedMooring: null,
+      selectedEmptyMooring: null,
+      selectedBoatId: null,
     };
   },
   computed: {
@@ -53,30 +86,58 @@ export default {
     rightMoorings() {
       return this.moorings.slice(20, 40);
     },
+    availableBoatsFiltered() {
+      return this.availableBoats.filter(
+        (boat) => !this.moorings.some((m) => m.boat && m.boat._id === boat._id)
+      );
+    },
   },
   methods: {
-    showBoatDetails(boat) {
-      if (boat) {
-        this.selectedBoat = boat;
-      } else {
-        this.selectedBoat = null;
-      }
+    showBoatDetails(mooring) {
+      this.selectedMooring = mooring;
+      this.selectedEmptyMooring = null;
+    },
+    showAddBoatForm(mooring) {
+      this.selectedEmptyMooring = mooring;
+      this.selectedMooring = null;
+    },
+    methods: {
+      closePopup() {
+        this.selectedMooring = null;
+        this.selectedEmptyMooring = null;
+      },
+    },
+
+    async removeBoat(mooringId) {
+      await fetch(`http://localhost:5000/api/moorings/${mooringId}/remove`, {
+        method: "POST",
+      });
+      this.moorings.find((m) => m._id === mooringId).boat = null;
+      this.selectedMooring = null;
+    },
+    async addBoat(mooringId) {
+      if (!this.selectedBoatId) return;
+      await fetch(`http://localhost:5000/api/moorings/${mooringId}/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ boatId: this.selectedBoatId }),
+      });
+      this.moorings.find((m) => m._id === mooringId).boat =
+        this.availableBoats.find((b) => b._id === this.selectedBoatId);
+      this.selectedEmptyMooring = null;
     },
   },
   async created() {
-    try {
-      const response = await fetch("http://localhost:5000/api/moorings");
-      const data = await response.json();
-
-      console.log("Mooring Data:", data);
-
-      this.moorings = data;
-    } catch (error) {
-      console.error("Error fetching moorings:", error);
-    }
+    this.moorings = await (
+      await fetch("http://localhost:5000/api/moorings")
+    ).json();
+    this.availableBoats = await (
+      await fetch("http://localhost:5000/api/boats/all")
+    ).json();
   },
 };
 </script>
+
 <style scoped>
 .mooring-container {
   display: flex;
@@ -105,6 +166,21 @@ export default {
   border: 2px solid black;
   /* Shift the dock to the left */
   margin-left: 15; /* removed the margin */
+}
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+}
+
+.close-button:hover {
+  color: red;
 }
 
 .mooring {
@@ -164,5 +240,40 @@ export default {
 .boat-details p {
   font-size: 14px;
   margin: 10px 0;
+}
+.remove-button {
+  background-color: red;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.remove-button:hover {
+  background-color: darkred;
+}
+.add-button {
+  background-color: green;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.add-button:hover {
+  background-color: darkgreen;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 5px;
 }
 </style>

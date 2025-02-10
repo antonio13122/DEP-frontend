@@ -11,6 +11,7 @@ import BookBerth from "@/views/BookBerth.vue";
 import MyBoat from "@/views/MyBoat.vue";
 import DockView from "@/views/DockView.vue";
 import ListBoat from "@/views/ListBoat.vue";
+import GuestView from "@/views/GuestView.vue";
 
 import Choose from "@/views/Choose.vue";
 import TestApi from "@/components/TestApi.vue";
@@ -40,6 +41,7 @@ const routes = [
   { path: "/AboutUs", component: AboutUs },
 
   { path: "/MainView", component: MainView },
+  { path: "/GuestView", component: GuestView },
 ];
 
 const router = createRouter({
