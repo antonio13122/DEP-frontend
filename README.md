@@ -1,21 +1,26 @@
 <h1 align="center">
   <br>
-  <a href="DEP.hr"><img src="https://i.ibb.co/KcrVf4nX/your-image.jpg" alt="Spiza" width="200"></a>
+  <a href="DEP.hr"><img src="https://i.ibb.co/KcrVf4nX/your-image.jpg" alt="DEP" width="200"></a>
   <br>
   <br>
 </h1>
 
 <h4 align="center">Web application designed to support sailors by managing boats in the marina, tracking departures and arrivals, and allowing users to book berths and manage boat data.</h4>
-
 <p align="center">
   <a href="https://vuejs.org/">
     <img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=flat&logo=vue.js&logoColor=white" alt="Vue.js">
   </a>
-  <a href="https://firebase.google.com/">
-    <img src="https://img.shields.io/badge/Firebase-FFCA28.svg?style=flat&logo=firebase&logoColor=black" alt="Firebase">
+  <a href="https://www.mongodb.com/">
+    <img src="https://img.shields.io/badge/MongoDB-47A248.svg?style=flat&logo=mongodb&logoColor=white" alt="MongoDB">
   </a>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=javascript&logoColor=black" alt="JavaScript">
+  <a href="https://expressjs.com/">
+    <img src="https://img.shields.io/badge/Express.js-000000.svg?style=flat&logo=express&logoColor=white" alt="Express.js">
+  </a>
+  <a href="https://axios-http.com/">
+    <img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat&logo=axios&logoColor=white" alt="Axios">
+  </a>
+  <a href="https://nodejs.org/">
+    <img src="https://img.shields.io/badge/Node.js-339933.svg?style=flat&logo=node.js&logoColor=white" alt="Node.js">
   </a>
 </p>
 
@@ -31,8 +36,6 @@
   
   
 </p>
-
-![screenshot](https://bs.uenicdn.com/blog/wp-content/uploads/2018/04/giphy.gif)
 
 ## Project from Web application course
 
@@ -108,9 +111,13 @@ $ git clone https://github.com/antonio13122/DEP-frontend
 Prototype made in Figma ( to be added )
 [![Figma Badge](https://img.shields.io/badge/Figma-Prototype-1c73b7?logo=figma&style=flat-square)](#) [Figma web app prototype](https://www.figma.com/)
 
-Use Case Diagram:
+## Uml Class Diagram:
 
-Uml Class Diagram:
+![UML Class Diagram](https://i.ibb.co/RTwSLGXq/UML-Class-DEP-1.png)
+
+## ER Diagram :
+
+![ER Diagram](https://i.ibb.co/KxD6tHVs/ER-DEP.png)
 
 ## Credits
 
