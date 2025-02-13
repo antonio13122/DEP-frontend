@@ -14,6 +14,8 @@ import ListBoat from "@/views/ListBoat.vue";
 import GuestView from "@/views/GuestView.vue";
 
 import Choose from "@/views/Choose.vue";
+import History from "@/views/History.vue";
+
 import TestApi from "@/components/TestApi.vue";
 import OwnerHome from "@/views/OwnerHome.vue";
 import SailorHome from "@/views/SailorHome.vue";
@@ -35,6 +37,8 @@ const routes = [
   { path: "/", component: Register },
 
   { path: "/Marinas", component: Marinas },
+  { path: "/History", component: History },
+
   { path: "/BookBerth", component: BookBerth },
   { path: "/MyBoat", component: MyBoat },
   { path: "/AppointmentForm", component: AppointmentForm },

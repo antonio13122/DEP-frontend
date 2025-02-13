@@ -1,5 +1,8 @@
 <template>
   <div class="product-page">
+    <router-link to="/MainView">
+      <img src="@/assets/homeicon.png" alt="Back Icon" class="back-icon" />
+    </router-link>
     <div class="product-container">
       <router-link to="/ListBoat">
         <img
@@ -18,6 +21,16 @@
           alt="Dockview"
         />
         <h1>Occupancy</h1>
+      </router-link>
+    </div>
+    <div class="product-container">
+      <router-link to="/History">
+        <img
+          class="product-image"
+          :src="require('@/assets/his.png')"
+          alt="History"
+        />
+        <h1>History</h1>
       </router-link>
     </div>
   </div>
@@ -39,8 +52,8 @@ export default {
 
 body {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(
     to bottom right,
     #274b74 0%,
@@ -57,10 +70,11 @@ body {
 
 .product-page {
   display: flex;
-  justify-content: center;
-  gap: 20rem;
+
+  gap: 10rem;
   align-items: center;
   margin-top: 200px;
+
   text-decoration: none;
 }
 
@@ -71,13 +85,21 @@ body {
   text-align: center;
   text-decoration: none;
 }
+.back-icon {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
 
 .product-container:hover {
   transform: scale(1.2);
 }
 
 .product-image {
-  width: 100%;
+  width: 90%;
   height: auto;
   display: block;
 }
