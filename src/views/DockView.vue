@@ -101,13 +101,10 @@ export default {
       this.selectedEmptyMooring = mooring;
       this.selectedMooring = null;
     },
-    methods: {
-      closePopup() {
-        this.selectedMooring = null;
-        this.selectedEmptyMooring = null;
-      },
+    closePopup() {
+      this.selectedMooring = null;
+      this.selectedEmptyMooring = null;
     },
-
     async removeBoat(mooringId) {
       await fetch(`http://localhost:5000/api/moorings/${mooringId}/remove`, {
         method: "POST",

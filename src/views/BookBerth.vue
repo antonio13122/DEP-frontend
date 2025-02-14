@@ -1,33 +1,75 @@
 <template>
-  <div class="book-berth">
+  <div class="mooring-container">
     <router-link to="/OwnerHome">
       <img src="@/assets/back_icon.png" alt="Back Icon" class="back-icon" />
     </router-link>
-    <h1>Book a Berth</h1>
 
-    <div v-if="loading" class="loading">Loading...</div>
-    <div v-else>
-      <div class="mooring-list">
-        <h2>Available Moorings</h2>
-        <ul>
-          <li
-            v-for="mooring in moorings"
-            :key="mooring._id"
-            :class="{ selected: selectedMooring === mooring._id }"
-            @click="selectMooring(mooring._id)"
-          >
-            Mooring #{{ mooring.number }} - Max Gaz: {{ mooring.max_gaz }}m
-          </li>
-        </ul>
+    <div class="mooring-grid">
+      <div
+        v-for="mooring in leftMoorings"
+        :key="mooring._id"
+        :class="[
+          'mooring',
+          mooring.boat ? 'occupied' : 'available',
+          selectedMooring === mooring._id ? 'selected' : '',
+        ]"
+        @click="
+          !mooring.boat && !boatHasMooring ? selectMooring(mooring) : null
+        "
+      >
+        {{ mooring.number }}
       </div>
-
-      <button @click="bookBerth" :disabled="!selectedMooring">
-        Book Berth
-      </button>
-
-      <div v-if="error" class="error">{{ error }}</div>
-      <div v-if="successMessage" class="success">{{ successMessage }}</div>
     </div>
+
+    <div class="dock"></div>
+
+    <div class="mooring-grid">
+      <div
+        v-for="mooring in rightMoorings"
+        :key="mooring._id"
+        :class="[
+          'mooring',
+          mooring.boat ? 'occupied' : 'available',
+          selectedMooring === mooring._id ? 'selected' : '',
+        ]"
+        @click="
+          !mooring.boat && !boatHasMooring ? selectMooring(mooring) : null
+        "
+      >
+        {{ mooring.number }}
+      </div>
+    </div>
+
+    <div
+      v-if="popupVisible"
+      class="popup-overlay"
+      @click="popupVisible = false"
+    >
+      <div class="popup" @click.stop>
+        <span class="close-btn" @click="popupVisible = false">×</span>
+        <h3>Mooring #{{ selectedMooring.number }}</h3>
+        <p>Max Gaz: {{ selectedMooring.max_gaz }}m</p>
+
+        <button
+          @click="bookBerth"
+          :disabled="!selectedMooring || boatHasMooring"
+          class="book-button"
+        >
+          Book Berth
+        </button>
+      </div>
+    </div>
+
+    <div v-if="error" class="error">
+      <span>You already booked.</span><br />
+      <span>
+        <router-link to="/AppointmentForm" class="contact-link"
+          >Contact us</router-link
+        >
+        for change.
+      </span>
+    </div>
+    <div v-if="successMessage" class="success">{{ successMessage }}</div>
   </div>
 </template>
 
@@ -40,11 +82,22 @@ export default {
     return {
       moorings: [],
       selectedMooring: null,
-      loading: true,
       error: null,
       successMessage: null,
       boat: null,
+      popupVisible: false,
     };
+  },
+  computed: {
+    leftMoorings() {
+      return this.moorings.slice(0, 20);
+    },
+    rightMoorings() {
+      return this.moorings.slice(20, 40);
+    },
+    boatHasMooring() {
+      return this.boat && this.boat.mooringId;
+    },
   },
   async mounted() {
     await this.fetchMoorings();
@@ -56,10 +109,8 @@ export default {
         const response = await axios.get("http://localhost:5000/api/moorings");
         this.moorings = response.data;
       } catch (err) {
-        this.error = "Error fetching ";
-        console.error("Error fetching ", err);
-      } finally {
-        this.loading = false;
+        this.error = "Error fetching moorings.";
+        console.error("Error fetching moorings", err);
       }
     },
     async fetchUserBoat() {
@@ -72,37 +123,49 @@ export default {
         if (response.data && response.data.length > 0) {
           this.boat = response.data[0];
         } else {
+          this.boat = null;
           this.error = "No boat found.";
         }
       } catch (err) {
-        this.error = "Error fetching .";
-        console.error("Error fetching:", err);
+        this.error = "Error fetching boat.";
+        console.error("Error fetching boat", err);
       }
     },
-    selectMooring(id) {
-      this.selectedMooring = id;
+    selectMooring(mooring) {
+      if (!this.boatHasMooring) {
+        this.selectedMooring = mooring;
+        this.popupVisible = true;
+      }
     },
     async bookBerth() {
       if (!this.boat) {
-        this.error = "You don't have a boat .";
+        this.error = "You don't have a boat.";
+        this.popupVisible = false;
         return;
       }
-
+      if (this.boatHasMooring) {
+        this.error = "You already have a booked mooring!";
+        this.popupVisible = false;
+        return;
+      }
       if (!this.selectedMooring) {
         this.error = "Please select a mooring.";
+        this.popupVisible = false;
         return;
       }
-
       try {
         await axios.post(
-          `http://localhost:5000/api/moorings/${this.selectedMooring}/add`,
-          { boatId: this.boat._id } //boat korisnikov
+          `http://localhost:5000/api/moorings/${this.selectedMooring._id}/add`,
+          { boatId: this.boat._id }
         );
+
         this.successMessage = "You have booked the berth!";
         this.error = null;
       } catch (err) {
-        this.error = "Error booking berth.";
-        console.error("Error booking berth:", err);
+        this.error = err.response?.data?.error || "Error booking berth.";
+        console.error("Error booking berth", err);
+      } finally {
+        this.popupVisible = false;
       }
     },
   },
@@ -110,56 +173,82 @@ export default {
 </script>
 
 <style scoped>
-.book-berth {
-  text-align: center;
-  padding: 20px;
+.mooring-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 125vh;
+  background: #0b0f23;
+  padding: 40px;
+  margin-left: 130px;
+  position: relative;
+}
+.success {
+  position: absolute;
   font-family: "Montserrat", sans-serif;
+  font-size: 68px;
+  font-weight: bold;
   color: white;
+  top: -1%;
+  left: 540px;
+  text-align: left;
+  line-height: 0.33;
+  white-space: nowrap;
+}
+.mooring-grid,
+.dock {
+  display: grid;
+  grid-template-rows: repeat(20, 1fr);
+  gap: 14px;
+  margin-right: 14px;
+  margin-left: 14px;
+}
+
+.dock {
+  background: white;
+  width: 80px;
+  height: 100%;
+  border: 2px solid black;
+}
+
+.mooring {
+  width: 150px;
+  font-family: "Montserrat", sans-serif;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #0b0f23;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.available {
+  background-color: green;
+}
+
+.occupied {
+  background-color: white;
+  cursor: not-allowed;
+}
+
+.selected {
+  background-color: #8233c5;
 }
 
 .back-icon {
   position: absolute;
   top: 10px;
-  left: 20px;
-  width: 30px;
-  height: 30px;
+  left: -100px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
 }
 
-h1 {
-  margin-bottom: 20px;
-}
-
-.mooring-list {
-  margin: 20px auto;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  width: 80%;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 5px 0;
-  border-radius: 5px;
-}
-
-li:hover {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.selected {
-  background: #8233c5;
-}
-
-button {
+.book-button {
   padding: 10px 20px;
   font-size: 16px;
   background: #e963fd;
@@ -167,20 +256,117 @@ button {
   border-radius: 5px;
   cursor: pointer;
   color: white;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-button:disabled {
+.book-button:disabled {
   background: gray;
   cursor: not-allowed;
 }
 
 .error {
   color: red;
-  margin-top: 10px;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .success {
   color: lightgreen;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup {
+  background-color: white;
+  padding: 150px 200px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 300px;
+  width: 100%;
+  position: relative;
+  z-index: 10000;
+}
+
+.popup .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: blue;
+  cursor: pointer;
+}
+
+.popup h3 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #0b0f23;
+  font-family: "Montserrat", sans-serif;
+}
+
+.popup p {
+  font-size: 24px;
+  color: #0b0f23;
+  font-family: "Montserrat", sans-serif;
+}
+
+.popup button {
   margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #0b0f23;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.success {
+  position: absolute;
+  font-family: "Montserrat", sans-serif;
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  top: 40%;
+  left: 68%;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+}
+.error {
+  position: absolute;
+  font-family: "Montserrat", sans-serif;
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  top: 40%;
+  left: 68%;
+  transform: translateX(-50%);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.contact-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>

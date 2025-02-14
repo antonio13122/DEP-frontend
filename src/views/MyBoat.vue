@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="anchor-container">
-      <router-link to="/BookBerth">
+      <router-link to="/OwnerHome">
         <img
           class="anchor-icon"
           :src="require('@/assets/anchor_icon.png')"

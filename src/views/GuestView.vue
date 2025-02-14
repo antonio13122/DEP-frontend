@@ -9,11 +9,7 @@
         v-for="mooring in leftMoorings"
         :key="mooring._id"
         :class="['mooring', mooring.boat ? 'occupied' : 'available']"
-      >
-        <span v-if="mooring.boat" class="boat-name">{{
-          mooring.boat.ime_broda
-        }}</span>
-      </div>
+      ></div>
     </div>
 
     <div class="dock"></div>
@@ -24,11 +20,6 @@
         <router-link to="/" class="member-link">member</router-link>
       </p>
       <p>to book the berth.</p>
-      <img
-        src="@/assets/login_page.png"
-        alt="Mooring Image"
-        class="info-image"
-      />
     </div>
 
     <div class="mooring-grid">
@@ -36,11 +27,7 @@
         v-for="mooring in rightMoorings"
         :key="mooring._id"
         :class="['mooring', mooring.boat ? 'occupied' : 'available']"
-      >
-        <span v-if="mooring.boat" class="boat-name">{{
-          mooring.boat.ime_broda
-        }}</span>
-      </div>
+      ></div>
     </div>
   </div>
 </template>
@@ -73,10 +60,12 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 125vh;
-  background: #0b0f23;
+  height: 120vh;
+  background-image: url("@/assets/guestbg.png");
+  background-size: cover;
+  background-position: center;
   padding: 40px;
-  margin-left: 130px;
+
   position: relative;
 }
 
@@ -92,8 +81,8 @@ export default {
 .dock {
   background: white;
   width: 80px;
-  height: 100%;
-  border: 2px solid black;
+  height: 110%;
+  border: 2px solid white;
 }
 
 .mooring {
@@ -111,23 +100,22 @@ export default {
 }
 
 .available {
-  background-color: green;
+  background-color: #1a4e23;
+  border-color: white;
 }
 
 .occupied {
   background-color: white;
 }
 
-.boat-name {
-  padding: 5px;
-}
-
 .back-icon {
   position: absolute;
-  top: 10px;
-  left: -100px;
+  top: 700px;
+  right: 0;
   width: 60px;
   height: 60px;
+  margin-left: 10px;
+  padding: 10px;
   cursor: pointer;
 }
 
@@ -137,26 +125,20 @@ export default {
   font-size: 68px;
   font-weight: bold;
   color: white;
-  top: -1%;
-  left: 540px;
-  text-align: left;
+  top: 25%;
+  left: 640px;
+  text-align: center;
   line-height: 0.33;
   white-space: nowrap;
 }
 
 .member-link {
-  color: white;
+  color: #007bff;
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
 
 .member-link:hover {
-  color: #007bff;
-}
-.info-image {
-  width: 830px;
-  height: auto;
-  margin-top: -40px;
-  border-radius: 8px;
+  color: white;
 }
 </style>
