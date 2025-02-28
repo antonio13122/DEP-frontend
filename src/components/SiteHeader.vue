@@ -7,6 +7,7 @@
         <li><a href="#AboutUs">About Us</a></li>
         <li><a href="#Marinas">Our Marinas</a></li>
         <li><router-link to="/AppointmentForm">Contact</router-link></li>
+        <li><router-link to="/WeatherAPI">Weather</router-link></li>
       </ul>
       <div class="buttons">
         <router-link to="/Choose" class="member-button">Join us →</router-link>

@@ -16,15 +16,15 @@ import GuestView from "@/views/GuestView.vue";
 import Choose from "@/views/Choose.vue";
 import History from "@/views/History.vue";
 
-import TestApi from "@/components/TestApi.vue";
 import OwnerHome from "@/views/OwnerHome.vue";
 import SailorHome from "@/views/SailorHome.vue";
+import WeatherAPI from "@/views/WeatherAPI.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
   { path: "/Choose", component: Choose },
   { path: "/ListBoat", component: ListBoat },
   { path: "/DockView", component: DockView },
-  { path: "/TestApi", component: TestApi },
+  { path: "/WeatherAPI", component: WeatherAPI },
 
   { path: "/Login", component: Login },
   { path: "/SailorHome", component: SailorHome },
