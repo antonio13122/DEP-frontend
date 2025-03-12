@@ -158,7 +158,11 @@ export default {
           `http://localhost:5000/api/moorings/${this.selectedMooring._id}/add`,
           { boatId: this.boat._id }
         );
-
+        await axios.post("http://localhost:5000/api/reservations", {
+          boat: this.boat._id,
+          owner: this.boat.user,
+          mooring: this.selectedMooring._id,
+        });
         this.successMessage = "You have booked the berth!";
         this.error = null;
       } catch (err) {
