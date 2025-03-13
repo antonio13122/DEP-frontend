@@ -20,6 +20,16 @@
         <h1>My Boat</h1>
       </router-link>
     </div>
+    <div class="product-container">
+      <router-link to="/ReservationPage">
+        <img
+          class="product-image"
+          :src="require('@/assets/reservationicon.png')"
+          alt="My Boat"
+        />
+        <h1>Reservations</h1>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -58,7 +68,7 @@ body {
 .product-page {
   display: flex;
   justify-content: center;
-  gap: 20rem;
+  gap: 14rem;
   align-items: center;
   margin-top: 200px;
 }
@@ -79,7 +89,6 @@ body {
   height: auto;
   display: block;
 }
-
 
 .router-link,
 .router-link a {

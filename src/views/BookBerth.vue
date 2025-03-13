@@ -69,7 +69,15 @@
         for change.
       </span>
     </div>
-    <div v-if="successMessage" class="success">{{ successMessage }}</div>
+    <div v-if="successMessage" class="success">
+      {{ successMessage }}<br />
+      <span class="reservation-link">
+        →
+        <router-link to="/reservationpage" class="contact-link"
+          >View Reservation→</router-link
+        >
+      </span>
+    </div>
   </div>
 </template>
 
@@ -372,5 +380,22 @@ export default {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
+}
+.reservation-link {
+  font-size: 30px;
+  font-weight: normal;
+  display: block;
+  margin-top: 30px;
+}
+
+.contact-link {
+  color: #00bfff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.contact-link:hover {
+  color: white;
 }
 </style>
