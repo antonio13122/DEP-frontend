@@ -74,7 +74,7 @@
       <span class="reservation-link">
         →
         <router-link to="/reservationpage" class="contact-link"
-          >View Reservation→</router-link
+          >View Reservation</router-link
         >
       </span>
     </div>

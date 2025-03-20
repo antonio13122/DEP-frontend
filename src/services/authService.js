@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/";
 
 export const register = async (userData) => {
   return axios.post(`${API_URL}/register`, userData);
