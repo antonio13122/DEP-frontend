@@ -107,7 +107,7 @@ export default {
     },
     async removeBoat(mooringId) {
       await fetch(
-        `https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings${mooringId}/remove`,
+        `https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings/${mooringId}/remove`,
         {
           method: "POST",
         }
