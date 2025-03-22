@@ -49,7 +49,9 @@ export default {
   },
   async created() {
     this.moorings = await (
-      await fetch("http://localhost:5000/api/moorings")
+      await fetch(
+        "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings"
+      )
     ).json();
   },
 };

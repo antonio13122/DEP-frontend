@@ -114,7 +114,9 @@ export default {
   methods: {
     async fetchMoorings() {
       try {
-        const response = await axios.get("http://localhost:5000/api/moorings");
+        const response = await axios.get(
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings"
+        );
         this.moorings = response.data;
       } catch (err) {
         this.error = "Error fetching moorings.";
@@ -124,9 +126,12 @@ export default {
     async fetchUserBoat() {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/boats", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         if (response.data && response.data.length > 0) {
           this.boat = response.data[0];
@@ -163,14 +168,17 @@ export default {
       }
       try {
         await axios.post(
-          `http://localhost:5000/api/moorings/${this.selectedMooring._id}/add`,
+          `https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings/${this.selectedMooring._id}/add`,
           { boatId: this.boat._id }
         );
-        await axios.post("http://localhost:5000/api/reservations", {
-          boat: this.boat._id,
-          owner: this.boat.user,
-          mooring: this.selectedMooring._id,
-        });
+        await axios.post(
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/reservations",
+          {
+            boat: this.boat._id,
+            owner: this.boat.user,
+            mooring: this.selectedMooring._id,
+          }
+        );
         this.successMessage = "You have booked the berth!";
         this.error = null;
       } catch (err) {

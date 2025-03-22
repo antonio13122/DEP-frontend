@@ -106,19 +106,25 @@ export default {
       this.selectedEmptyMooring = null;
     },
     async removeBoat(mooringId) {
-      await fetch(`http://localhost:5000/api/moorings/${mooringId}/remove`, {
-        method: "POST",
-      });
+      await fetch(
+        `https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings${mooringId}/remove`,
+        {
+          method: "POST",
+        }
+      );
       this.moorings.find((m) => m._id === mooringId).boat = null;
       this.selectedMooring = null;
     },
     async addBoat(mooringId) {
       if (!this.selectedBoatId) return;
-      await fetch(`http://localhost:5000/api/moorings/${mooringId}/add`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ boatId: this.selectedBoatId }),
-      });
+      await fetch(
+        `https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings/${mooringId}/add`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ boatId: this.selectedBoatId }),
+        }
+      );
       this.moorings.find((m) => m._id === mooringId).boat =
         this.availableBoats.find((b) => b._id === this.selectedBoatId);
       this.selectedEmptyMooring = null;
@@ -126,10 +132,14 @@ export default {
   },
   async created() {
     this.moorings = await (
-      await fetch("http://localhost:5000/api/moorings")
+      await fetch(
+        "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings/"
+      )
     ).json();
     this.availableBoats = await (
-      await fetch("http://localhost:5000/api/boats/all")
+      await fetch(
+        "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/all"
+      )
     ).json();
   },
 };

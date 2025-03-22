@@ -47,7 +47,9 @@ export default {
   methods: {
     async fetchAllBoats() {
       try {
-        const response = await axios.get("http://localhost:5000/api/boats/all");
+        const response = await axios.get(
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/all"
+        );
         this.boats = response.data;
       } catch (error) {
         console.error("Error fetching boats:", error);

@@ -49,7 +49,7 @@ export default {
     async fetchHistory() {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/moorings/history/all"
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings/history/all"
         );
         this.history = await response.json();
       } catch (error) {
