@@ -48,7 +48,7 @@ export default {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/reservations",
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api//reservations/",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
