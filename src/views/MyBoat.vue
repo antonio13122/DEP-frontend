@@ -103,7 +103,7 @@ export default {
         const response = await axios.get(
           "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/",
           {
-            headers: { Authorization: token },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
 
@@ -124,7 +124,7 @@ export default {
         const response = await axios.post(
           "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/",
           this.newBoat,
-          { headers: { Authorization: token } }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         this.boat = response.data;
