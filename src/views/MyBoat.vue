@@ -100,9 +100,12 @@ export default {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await axios.get("http://localhost:5000/api/boats", {
-          headers: { Authorization: token },
-        });
+        const response = await axios.get(
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/",
+          {
+            headers: { Authorization: token },
+          }
+        );
 
         if (response.data.length > 0) {
           this.boat = response.data[0];
@@ -119,7 +122,7 @@ export default {
         if (!token) return;
 
         const response = await axios.post(
-          "http://localhost:5000/api/boats",
+          "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/",
           this.newBoat,
           { headers: { Authorization: token } }
         );
