@@ -12,6 +12,7 @@ import MyBoat from "@/views/MyBoat.vue";
 import DockView from "@/views/DockView.vue";
 import ListBoat from "@/views/ListBoat.vue";
 import GuestView from "@/views/GuestView.vue";
+import BoatScanner from "@/views/BoatScanner.vue";
 import ReservationPage from "@/views/ReservationPage.vue";
 
 import Choose from "@/views/Choose.vue";
@@ -39,6 +40,7 @@ const routes = [
 
   { path: "/Marinas", component: Marinas },
   { path: "/History", component: History },
+  { path: "/BoatScanner", component: BoatScanner },
   { path: "/ReservationPage", component: ReservationPage },
 
   { path: "/BookBerth", component: BookBerth },
