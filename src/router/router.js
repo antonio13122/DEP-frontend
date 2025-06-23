@@ -13,6 +13,9 @@ import DockView from "@/views/DockView.vue";
 import ListBoat from "@/views/ListBoat.vue";
 import GuestView from "@/views/GuestView.vue";
 import BoatScanner from "@/views/BoatScanner.vue";
+import BoatScannerWebcam from "@/views/BoatScannerWebcam.vue";
+import BoatScannerVideo from "@/views/BoatScannerVideo.vue";
+
 import ReservationPage from "@/views/ReservationPage.vue";
 
 import Choose from "@/views/Choose.vue";
@@ -41,7 +44,9 @@ const routes = [
   { path: "/Marinas", component: Marinas },
   { path: "/History", component: History },
   { path: "/BoatScanner", component: BoatScanner },
+  { path: "/BoatScannerWebcam", component: BoatScannerWebcam },
   { path: "/ReservationPage", component: ReservationPage },
+  { path: "/BoatScannerVideo", component: BoatScannerVideo },
 
   { path: "/BookBerth", component: BookBerth },
   { path: "/MyBoat", component: MyBoat },
