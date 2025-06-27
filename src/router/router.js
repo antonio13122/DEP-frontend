@@ -24,8 +24,10 @@ import History from "@/views/History.vue";
 import OwnerHome from "@/views/OwnerHome.vue";
 import SailorHome from "@/views/SailorHome.vue";
 import WeatherAPI from "@/views/WeatherAPI.vue";
+import webcam from "@/views/webcam.vue";
 const routes = [
   { path: "/HomePage", component: HomePage },
+
   { path: "/Choose", component: Choose },
   { path: "/ListBoat", component: ListBoat },
   { path: "/DockView", component: DockView },
@@ -47,6 +49,7 @@ const routes = [
   { path: "/BoatScannerWebcam", component: BoatScannerWebcam },
   { path: "/ReservationPage", component: ReservationPage },
   { path: "/BoatScannerVideo", component: BoatScannerVideo },
+  { path: "/webcam", component: webcam },
 
   { path: "/BookBerth", component: BookBerth },
   { path: "/MyBoat", component: MyBoat },

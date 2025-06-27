@@ -21,8 +21,8 @@
 <script setup>
 import { ref } from "vue";
 
-// ✅ API base URL defined directly in the component
-const API_BASE = "http://localhost:8080"; // Change this as needed
+
+const API_BASE = "http://localhost:8080"; 
 
 const videoFile = ref(null);
 const result = ref(null);
@@ -47,7 +47,7 @@ async function uploadVideo() {
     const data = await response.json();
     result.value = data;
 
-    // Build video path assuming same server hosts it
+    
     videoSrc.value = `${API_BASE}/${data.output_path}`;
   } catch (err) {
     console.error(err);

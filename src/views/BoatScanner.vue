@@ -138,7 +138,7 @@ async function checkBoatInBackend(name) {
       return;
     }
 
-    // Get moorings and find the one where this boat is moored
+
     const mooringRes = await axios.get(MOORING_API);
     const moorings = mooringRes.data;
 
