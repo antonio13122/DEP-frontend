@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="scanner">
+    <h2>Scan boat with webcam</h2>
+
     <div style="position: relative; width: 640px; height: 480px">
       <video
         ref="video"
@@ -17,28 +19,25 @@
       ></canvas>
     </div>
 
-    <!-- Start/Stop Buttons -->
     <div style="margin-top: 10px">
       <button @click="startWebcam" :disabled="stream">Start Webcam</button>
       <button @click="stopWebcam" :disabled="!stream">Stop Webcam</button>
     </div>
 
-    <!-- JSON display under webcam -->
-    <pre
-      style="
-        margin-top: 20px;
-        padding: 10px;
-        background: #f5f5f5;
-        border: 1px solid #ccc;
-        max-height: 400px;
-        overflow: auto;
-      "
-      >{{ formattedDetections }}</pre
-    >
+    <div v-if="message" class="message">
+      {{ message }}
+      <router-link v-if="linkText" :to="linkTarget" class="message-link">
+        {{ linkText }}
+      </router-link>
+    </div>
+
+    <pre class="detection-output">{{ formattedDetections }}</pre>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -47,11 +46,14 @@ export default {
       width: 640,
       height: 480,
       lastDetections: [],
+      message: "",
+      linkText: "",
+      linkTarget: "",
     };
   },
   methods: {
     async startWebcam() {
-      if (this.stream) return; // already running
+      if (this.stream) return;
 
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -71,6 +73,9 @@ export default {
       }
       clearInterval(this.intervalId);
       this.clearCanvas();
+      this.message = "";
+      this.linkText = "";
+      this.linkTarget = "";
     },
     startDetectionLoop() {
       this.intervalId = setInterval(this.captureAndDetect, 1500);
@@ -106,6 +111,19 @@ export default {
 
         this.lastDetections = detections;
         this.drawDetections(detections);
+
+        const name =
+          data.most_likely_boat_name ||
+          this.extractNameFromDetections(detections);
+
+        if (!name) {
+          this.message = " No boat name detected.";
+          this.linkText = "";
+          this.linkTarget = "";
+          return;
+        }
+
+        await this.checkBoatInBackend(name);
       } catch (error) {
         console.error("Detection request failed:", error);
       }
@@ -129,19 +147,66 @@ export default {
         if (det.label) {
           ctx.fillText(det.label, x1, y1 - 5);
         }
-
-        if (det.boat_name) {
-          ctx.fillStyle = "white";
-          ctx.fillText(`Boat: ${det.boat_name}`, x1, y2 + 20);
-        }
-
-        if (Array.isArray(det.texts)) {
-          det.texts.forEach((txt, i) => {
-            ctx.fillStyle = "white";
-            ctx.fillText(txt, x1, y2 + 40 + i * 20);
-          });
-        }
       });
+    },
+    extractNameFromDetections(detections) {
+      const texts = [];
+      detections.forEach((det) => {
+        if (Array.isArray(det.texts_gray)) texts.push(...det.texts_gray);
+        if (Array.isArray(det.texts_blurred)) texts.push(...det.texts_blurred);
+        if (Array.isArray(det.texts_thresh)) texts.push(...det.texts_thresh);
+        if (Array.isArray(det.texts)) texts.push(...det.texts);
+      });
+
+      const valid = texts.filter(
+        (t) => t && t.length >= 3 && /[a-zA-Z]/.test(t)
+      );
+      return valid[0]?.toUpperCase() || null;
+    },
+    async checkBoatInBackend(name) {
+      const BACKEND_BASE =
+        "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/all";
+      const MOORING_API =
+        "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings";
+
+      try {
+        const res = await axios.get(BACKEND_BASE);
+        const boats = res.data;
+
+        const boat = boats.find(
+          (b) =>
+            b.ime_broda &&
+            (b.ime_broda.toUpperCase().includes(name.toUpperCase()) ||
+              name.toUpperCase().includes(b.ime_broda.toUpperCase()))
+        );
+
+        if (!boat) {
+          this.message = ` No record found for "${name}".`;
+          this.linkText = "Add this boat";
+          this.linkTarget = "/DockView";
+          return;
+        }
+
+        const mooringRes = await axios.get(MOORING_API);
+        const moorings = mooringRes.data;
+
+        const mooring = moorings.find((m) => m.boat?._id === boat._id);
+
+        if (mooring) {
+          this.message = ` "${boat.ime_broda}" is moored at number ${mooring.number}.`;
+          this.linkText = "Check the dock";
+          this.linkTarget = "/DockView";
+        } else {
+          this.message = `  "${boat.ime_broda}" is not currently moored.`;
+          this.linkText = "Give the mooring";
+          this.linkTarget = "/DockView";
+        }
+      } catch (err) {
+        console.error(err);
+        this.message = "❌ Failed to check boat.";
+        this.linkText = "";
+        this.linkTarget = "";
+      }
     },
   },
   computed: {
@@ -154,3 +219,73 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.scanner {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #357ac9;
+}
+
+.message {
+  padding: 1rem;
+  background: #eaf7ea;
+  border-left: 6px solid #4caf50;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #2f5d34;
+}
+
+.message-link {
+  display: block;
+  margin-top: 0.5rem;
+  color: #4a90e2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.message-link:hover {
+  text-decoration: underline;
+}
+
+.detection-output {
+  background: #f8f9fb;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #333;
+  border: 1px solid #ddd;
+  max-height: 400px;
+  overflow: auto;
+}
+</style>

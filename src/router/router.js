@@ -23,6 +23,7 @@ import History from "@/views/History.vue";
 
 import OwnerHome from "@/views/OwnerHome.vue";
 import SailorHome from "@/views/SailorHome.vue";
+import SailorHome2 from "@/views/SailorHome2.vue";
 import WeatherAPI from "@/views/WeatherAPI.vue";
 import webcam from "@/views/webcam.vue";
 const routes = [
@@ -35,6 +36,7 @@ const routes = [
 
   { path: "/Login", component: Login },
   { path: "/SailorHome", component: SailorHome },
+  { path: "/SailorHome2", component: SailorHome2 },
   {
     path: "/OwnerHome",
     component: OwnerHome,

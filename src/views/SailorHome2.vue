@@ -1,50 +1,50 @@
 <template>
   <div class="product-page">
-    <router-link to="/MainView">
+    <router-link to="/SailorHome">
       <img src="@/assets/homeicon.png" alt="Back Icon" class="back-icon" />
     </router-link>
 
     <div class="product-container">
-      <router-link to="/ListBoat">
+      <router-link to="/webcam">
         <img
           class="product-image"
-          :src="require('@/assets/list_icon.png')"
-          alt="List View"
+          :src="require('@/assets/livescan.png')"
+          alt="Live cam"
         />
-        <h1>All boats</h1>
+        <h1>Arrivals Live</h1>
       </router-link>
     </div>
 
     <div class="product-container">
-      <router-link to="/DockView">
+      <router-link to="/BoatScanner">
         <img
           class="product-image"
-          :src="require('@/assets/arr_icon.png')"
+          :src="require('@/assets/photoup.png')"
           alt="Dockview"
         />
-        <h1>Occupancy</h1>
+        <h1>Photo Check-in</h1>
       </router-link>
     </div>
 
     <div class="product-container">
-      <router-link to="/History">
+      <router-link to="/BoatScannerVideo">
         <img
           class="product-image"
-          :src="require('@/assets/his.png')"
+          :src="require('@/assets/videoicon.png')"
           alt="History"
         />
-        <h1>History</h1>
+        <h1>Video Check-in <input type="text" name="" id="" /></h1>
       </router-link>
     </div>
 
     <div class="product-container">
-      <router-link to="/SailorHome2">
+      <router-link to="/BoatScannerWebcam">
         <img
           class="product-image"
-          :src="require('@/assets/arr.png')"
+          :src="require('@/assets/enter.png')"
           alt="Arrivals"
         />
-        <h1>Arrivals</h1>
+        <h1>Dock Control</h1>
       </router-link>
     </div>
   </div>

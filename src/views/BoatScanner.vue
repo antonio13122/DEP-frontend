@@ -1,19 +1,28 @@
 <template>
   <div class="scanner">
-    <!-- Upload & Webcam Buttons -->
-    <button @click="triggerFileInput">📷 Upload Image</button>
+    <h2>Add the boat to mooring</h2>
+
+    <button @click="triggerFileInput">Upload boat image</button>
     <input
       type="file"
       @change="handleUpload"
       ref="fileInput"
       style="display: none"
     />
-    <button @click="useWebcam">🎥 Capture Webcam Snapshot</button>
 
-    <!-- Result Message -->
-    <div v-if="message" class="message">{{ message }}</div>
+    <!-- ✅ IMAGE PREVIEW -->
+    <div v-if="previewUrl" class="preview">
+      <h3>📸 Uploaded Image:</h3>
+      <img :src="previewUrl" alt="Uploaded Boat" />
+    </div>
 
-    <!-- OCR Detection Output -->
+    <div v-if="message" class="message">
+      {{ message }}
+      <router-link v-if="linkText" :to="linkTarget" class="message-link">
+        {{ linkText }}
+      </router-link>
+    </div>
+
     <div v-if="detectionData.length" class="detection-output">
       <h3>🔍 OCR Detected Names:</h3>
       <ul>
@@ -38,12 +47,15 @@ import { ref } from "vue";
 import axios from "axios";
 
 const fileInput = ref(null);
+const previewUrl = ref(""); // ✅ preview
 const message = ref("");
 const detectionData = ref([]);
+const linkText = ref("");
+const linkTarget = ref("");
 
-const API_BASE = "http://localhost:8080"; // FastAPI OCR API
+const API_BASE = "http://localhost:8080"; // OCR API
 const BACKEND_BASE =
-  "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/all"; // Express API (MongoDB)
+  "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/boats/all"; // Express API
 const MOORING_API =
   "https://desolate-caverns-71958-8003a607a2e2.herokuapp.com/api/moorings";
 
@@ -54,6 +66,8 @@ function triggerFileInput() {
 async function handleUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
+
+  previewUrl.value = URL.createObjectURL(file); // ✅ set preview
 
   const isVideo = file.type.includes("video");
   const endpoint = isVideo ? "/detect_video" : "/detect";
@@ -68,6 +82,8 @@ async function handleUpload(e) {
     const name = data.most_likely_boat_name || extractNameFromDetections(data);
     if (!name) {
       message.value = "❌ No boat name detected.";
+      linkText.value = "Add this boat";
+      linkTarget.value = "/DockView";
       return;
     }
 
@@ -75,40 +91,8 @@ async function handleUpload(e) {
   } catch (err) {
     console.error(err);
     message.value = "❌ Upload failed.";
-  }
-}
-
-async function useWebcam() {
-  try {
-    const video = document.createElement("video");
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
-    await video.play();
-
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext("2d").drawImage(video, 0, 0);
-
-    const base64 = canvas.toDataURL("image/jpeg").split(",")[1];
-    stream.getTracks().forEach((track) => track.stop());
-
-    const { data } = await axios.post(`${API_BASE}/detect_frame`, {
-      image: base64,
-    });
-
-    detectionData.value = data.detections || [];
-    const name = extractNameFromDetections(data);
-
-    if (!name) {
-      message.value = "❌ No boat name detected from webcam.";
-      return;
-    }
-
-    await checkBoatInBackend(name);
-  } catch (err) {
-    console.error(err);
-    message.value = "❌ Webcam capture failed.";
+    linkText.value = "";
+    linkTarget.value = "";
   }
 }
 
@@ -130,14 +114,18 @@ async function checkBoatInBackend(name) {
     const boats = res.data;
 
     const boat = boats.find(
-      (b) => b.ime_broda && b.ime_broda.toUpperCase() === name.toUpperCase()
+      (b) =>
+        b.ime_broda &&
+        (b.ime_broda.toUpperCase().includes(name.toUpperCase()) ||
+          name.toUpperCase().includes(b.ime_broda.toUpperCase()))
     );
 
     if (!boat) {
       message.value = `❌ No record found for "${name}".`;
+      linkText.value = "Add this boat";
+      linkTarget.value = "/DockView";
       return;
     }
-
 
     const mooringRes = await axios.get(MOORING_API);
     const moorings = mooringRes.data;
@@ -146,12 +134,18 @@ async function checkBoatInBackend(name) {
 
     if (mooring) {
       message.value = `✅ 🚤 "${boat.ime_broda}" is moored at number ${mooring.number}.`;
+      linkText.value = "Check the dock";
+      linkTarget.value = "/DockView";
     } else {
       message.value = `✅ 🚤 "${boat.ime_broda}" is not currently moored.`;
+      linkText.value = "Give the mooring";
+      linkTarget.value = "/DockView";
     }
   } catch (err) {
     console.error(err);
     message.value = "❌ Failed to check boat.";
+    linkText.value = "";
+    linkTarget.value = "";
   }
 }
 </script>
@@ -159,48 +153,79 @@ async function checkBoatInBackend(name) {
 <style scoped>
 .scanner {
   padding: 2rem;
-  max-width: 600px;
-  margin: auto;
+  max-width: 800px;
+  margin: 4rem auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  background-color: #f4faff;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  gap: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-weight: 600;
+  color: #333;
 }
 
 button {
-  padding: 0.7rem 1.5rem;
+  padding: 0.8rem 2rem;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
-  background-color: #4a90e2;
+  background: #4a90e2;
   color: white;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 button:hover {
-  background-color: #357ac9;
+  background: #357ac9;
+}
+
+.preview {
+  text-align: center;
+}
+
+.preview img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
 }
 
 .message {
   padding: 1rem;
-  background-color: pink;
-  font-weight: bold;
-  font-size: 1.1rem;
+  background: #eaf7ea;
+  border-left: 6px solid #4caf50;
+  font-weight: 500;
+  font-size: 1rem;
   border-radius: 8px;
   text-align: center;
-  color: #333;
+  color: #2f5d34;
+}
+
+.message-link {
+  display: block;
+  margin-top: 0.5rem;
+  color: #4a90e2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.message-link:hover {
+  text-decoration: underline;
 }
 
 .detection-output {
   margin-top: 1rem;
-  background-color: #fff4f9;
+  background: #f8f9fb;
   padding: 1rem;
   border-radius: 8px;
   font-family: monospace;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #333;
-  border: 1px solid #e6cce2;
+  border: 1px solid #ddd;
 }
 </style>
