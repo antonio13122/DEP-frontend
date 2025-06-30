@@ -33,7 +33,7 @@
           :src="require('@/assets/videoicon.png')"
           alt="History"
         />
-        <h1>Video Check-in <input type="text" name="" id="" /></h1>
+        <h1>Video Check-in</h1>
       </router-link>
     </div>
 
